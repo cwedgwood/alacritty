@@ -45,6 +45,12 @@ winit = { version = "0.30.4", default-features = false, features = ["rwh_06", "s
 
 [build-dependencies]
 gl_generator = "0.14.0"
+winresource = "0.1"
+
+[package.metadata.winresource]
+OriginalFilename = "alacritty.exe"
+LegalCopyright = "Copyright © 2023"
+Comments = "Unofficial Alacritty build by cw for Win64"
 
 [dev-dependencies]
 clap_complete = "4.2.3"

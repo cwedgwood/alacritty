@@ -23,7 +23,14 @@ fn main() {
     .unwrap();
 
     #[cfg(windows)]
-    embed_resource::compile("./windows/alacritty.rc", embed_resource::NONE);
+    // embed_resource::compile("./windows/alacritty.rc", embed_resource::NONE);
+    embed_resource::compile("./windows/alacritty.rc");
+
+     if std::env::var("CARGO_CFG_TARGET_OS").unwrap() == "windows" {
+        let mut res = winresource::WindowsResource::new();
+        res.set_icon("term.ico");
+        res.compile().unwrap();
+     }
 }
 
 fn commit_hash() -> Option<String> {

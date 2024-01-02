@@ -59,11 +59,12 @@ dependencies = [
  "serde_json",
  "serde_yaml",
  "tempfile",
- "toml",
+ "toml 0.8.14",
  "toml_edit 0.22.21",
  "unicode-width-16",
  "windows-sys 0.52.0",
  "winit",
+ "winresource",
  "xdg",
 ]
 
@@ -74,7 +75,7 @@ dependencies = [
  "alacritty_config_derive",
  "log",
  "serde",
- "toml",
+ "toml 0.8.14",
 ]
 
 [[package]]
@@ -87,7 +88,7 @@ dependencies = [
  "quote",
  "serde",
  "syn",
- "toml",
+ "toml 0.8.14",
 ]
 
 [[package]]
@@ -656,7 +657,7 @@ dependencies = [
  "cc",
  "memchr",
  "rustc_version",
- "toml",
+ "toml 0.8.14",
  "vswhom",
  "winreg",
 ]
@@ -1939,6 +1940,18 @@ dependencies = [
 
 [[package]]
 name = "toml"
+version = "0.7.8"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "dd79e69d3b627db300ff956027cc6c3798cef26d22526befdfcd12feeb6d2257"
+dependencies = [
+ "serde",
+ "serde_spanned",
+ "toml_datetime",
+ "toml_edit 0.19.15",
+]
+
+[[package]]
+name = "toml"
 version = "0.8.14"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "6f49eb2ab21d2f26bd6db7bf383edc527a7ebaee412d17af4d40fdccd442f335"
@@ -1956,6 +1969,19 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "0dd7358ecb8fc2f8d014bf86f6f638ce72ba252a2c3a2572f2a795f1d23efb41"
 dependencies = [
  "serde",
+]
+
+[[package]]
+name = "toml_edit"
+version = "0.19.15"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "1b5bb770da30e5cbfde35a2d7b9b8a2c4b8ef89548a7a6aeab5c9a576e3e7421"
+dependencies = [
+ "indexmap",
+ "serde",
+ "serde_spanned",
+ "toml_datetime",
+ "winnow 0.5.40",
 ]
 
 [[package]]
@@ -2613,6 +2639,16 @@ checksum = "a277a57398d4bfa075df44f501a17cfdf8542d224f0d36095a2adc7aee4ef0a5"
 dependencies = [
  "cfg-if",
  "windows-sys 0.48.0",
+]
+
+[[package]]
+name = "winresource"
+version = "0.1.17"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "77e2aaaf8cfa92078c0c0375423d631f82f2f57979c2884fdd5f604a11e45329"
+dependencies = [
+ "toml 0.7.8",
+ "version_check",
 ]
 
 [[package]]
