@@ -61,9 +61,33 @@ impl Clipboard {
             _ => &mut self.clipboard,
         };
 
-        clipboard.set_contents(text.into()).unwrap_or_else(|err| {
-            warn!("Unable to store text in clipboard: {}", err);
-        });
+        // Sometimes updates to the Windows clipboard fails, IDKW so
+        // for now put in a retry-loop to mitigate this.
+        //
+        // As of 2024/March/12 I still see problems without this.
+        // With this I have seen one error with 3 retries and a 10ms
+        // rate limit --- so I will try 5 retries with a 20ms backoff.
+        const MAX_RETRIES: usize = 5;
+        let rate_limit = std::time::Duration::from_millis(20);
+        let content = text.into();
+        let mut retries = 0;
+        loop {
+            match clipboard.set_contents(content.clone()) {
+                Ok(_) => break,
+                Err(err) => {
+                    retries += 1;
+                    if retries >= MAX_RETRIES {
+                        warn!(
+                            "Unable to store text in clipboard after {} retries: {}",
+                            MAX_RETRIES, err
+                        );
+                        return;
+                    }
+                    // rate-limit how hard we retry
+                    std::thread::sleep(rate_limit);
+                },
+            }
+        }
     }
 
     pub fn load(&mut self, ty: ClipboardType) -> String {
