@@ -1243,6 +1243,10 @@ impl<'a, N: Notify + 'a, T: EventListener> input::ActionContext<T> for ActionCon
             // paste end escape `\x1b[201~` and `\x03` since some shells incorrectly terminate
             // bracketed paste when they receive it.
             let filtered = text.replace(['\x1b', '\x03'], "");
+	    // attempt CRLF to LF translation to avoid pasting issues, see
+	    // https://github.com/aytey/alacritty/commit/c3a59242fd73a5db971fa41d810c20f366d63896 and
+	    // https://github.com/alacritty/alacritty/issues/2324 for more details.
+	    let filtered = filtered.replace("\r\n", "\n");
             self.write_to_pty(filtered.into_bytes());
 
             self.write_to_pty(&b"\x1b[201~"[..]);
